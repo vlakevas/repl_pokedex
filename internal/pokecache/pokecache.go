@@ -43,6 +43,10 @@ func (c *Cache) Get(key string) ([]byte, bool) {
 	defer c.mu.Unlock()
 
 	value, ok := c.v[key]
+	if ok {
+		value.createdAt = time.Now()
+		c.v[key] = value
+	}
 	return value.val, ok
 }
 
